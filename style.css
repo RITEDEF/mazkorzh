@@ -1,0 +1,26 @@
+body {
+    background-image: url('мем.png');
+    background-size: cover;
+}
+.desktop-content { display: block; }
+.mobile-content { display: none; }
+
+@media (max-width: 768px) {
+   .desktop-content { display: none; }
+   .mobile-content { display: block; }
+}
+/* Стили для всех устройств (базовые) */
+
+/* Срабатывает ТОЛЬКО когда ширина экрана ≤ 768px (телефоны/планшеты) */
+@media (max-width: 768px) {
+    /* Эти стили применяются только на телефонах */
+    .desktop-menu { display: none; }
+    .mobile-menu-btn { display: block; }
+}
+
+/* Срабатывает ТОЛЬКО когда ширина экрана > 768px (ПК) */
+@media (min-width: 769px) {
+    /* Эти стили применяются только на ПК */
+    .desktop-menu { display: flex; }
+    .mobile-menu-btn { display: none; }
+}
