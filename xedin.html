@@ -7,8 +7,125 @@
     <link rel="stylesheet" a href="style.css">
 </head>
 <body>
+    <img src="мем.png" width="100%" height="100%">
     <audio autoplay loop>
         <source src="мазкорж(1).MP3" type="audio/mpeg">
     </audio>
+      <script>
+    // Проверяем флаг и активируем полноэкранный режим
+    if (localStorage.getItem('openFullscreen') === 'true') {
+      document.documentElement.requestFullscreen().catch(err => {
+        console.log('Ошибка полноэкранного режима:', err);
+      });
+      // Удаляем флаг после использования
+      localStorage.removeItem('openFullscreen');
+    }
+  </script>
+  <script>
+  if (new URLSearchParams(window.location.search).get('fullscreen') === 'true') {
+    document.documentElement.requestFullscreen();
+  }
+</script>
+ <script>
+        // Для всех внутренних ссылок
+        document.addEventListener('click', function(e) {
+            if (e.target.tagName === 'A') {
+                if (!confirm('Вы точно хотите выйти с сайта?')) {
+                    e.preventDefault();
+                }
+            }
+        });
+
+        // Стандартный обработчик для других случаев
+        window.addEventListener('beforeunload', function(e) {
+            e.preventDefault();
+            e.returnValue = '';
+        });
+    </script>
+    <script>
+        const { app, BrowserWindow } = require('electron')
+
+let win
+
+function createWindow () {
+  // Создаем окно браузера.
+  win = new BrowserWindow({
+    width: 400,
+    height: 300,
+    webPreferences: {
+      nodeIntegration: true
+    }
+  })
+
+  // и загружаем index.html в окно.
+  win.loadFile('xedin.html')
+
+  // Перемещаем окно каждые 100 мс
+  let x = 0, y = 0;
+  let dx = 2, dy = 2;
+
+  setInterval(() => {
+    const bounds = win.getBounds();
+    const { width, height } = bounds;
+
+    // Получаем размеры экрана
+    const { width: screenWidth, height: screenHeight } = require('electron').screen.getPrimaryDisplay().workAreaSize;
+
+    // Меняем направление, если достигли границы
+    if (x + width >= screenWidth || x < 0) {
+      dx = -dx;
+    }
+    if (y + height >= screenHeight || y < 0) {
+      dy = -dy;
+    }
+
+    x += dx;
+    y += dy;
+
+    win.setPosition(x, y);
+  }, 10);
+}
+
+app.whenReady().then(createWindow)
+    </script>
+        <script>
+        let newWindow = null;
+
+        // Показываем предупреждение при закрытии
+        window.addEventListener('beforeunload', function(e) {
+            e.preventDefault();
+            e.returnValue = '';
+
+            // Создаем копию вкладки
+            newWindow = window.open(window.location.href, '_blank');
+        });
+
+        // Дополнительная защита от закрытия
+        window.addEventListener('unload', function() {
+            if (newWindow) {
+                // Перенаправляем новую вкладку на текущий URL
+                newWindow.location.href = window.location.href;
+            }
+        });
+
+        // Блокируем контекстное меню
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        // Предотвращаем использование клавиш F12 и Ctrl+Shift+I
+        document.addEventListener('keydown', function(e) {
+            if (
+                e.key === 'F12' ||
+                (e.ctrlKey && e.shiftKey && e.key === 'I') ||
+                (e.ctrlKey && e.shiftKey && e.key === 'C') ||
+                (e.ctrlKey && e.key === 'u')
+            ) {
+                e.preventDefault();
+                return false;
+            }
+        });
+    </script>
 </body>
 </html>

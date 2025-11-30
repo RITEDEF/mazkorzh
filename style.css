@@ -1,6 +1,8 @@
 body {
-    background-image: url('мем.png');
     background-size: cover;
+    margin: 0;
+    padding: 0;
+    background-color: yellow;
 }
 .desktop-content { display: block; }
 .mobile-content { display: none; }

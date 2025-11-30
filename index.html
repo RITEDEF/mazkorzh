@@ -10,23 +10,15 @@
     <center><font-weight: bold;>Энвисидов Продакшн!</font></center>
     <br><br><br><br>
     <center>
-        <a href="xedin.html">Энтер </a>
-         <script>
-        function openFullscreen() {
-            const elem = document.documentElement;
-            if (elem.requestFullscreen) {
-                elem.requestFullscreen();
-            } else if (elem.webkitRequestFullscreen) { 
-                elem.webkitRequestFullscreen();
-            } else if (elem.msRequestFullscreen) { 
-                elem.msRequestFullscreen();
-            } else if (elem.mozRequestFullScreen) { 
-                elem.mozRequestFullScreen();
-            }
-        }
-    </script>
+        <a href="xedin.html" id="fullscreen-link">Энтер</a>
+        <script>
+  document.getElementById('fullscreen-link').addEventListener('click', function(e) {
+    // Сохраняем информацию о необходимости полноэкранного режима
+    localStorage.setItem('openFullscreen', 'true');
+  });
+</script>
     <br><br><br><br>
-    <a href="https://t.me/artemnvc" target="_blank"><img src="банер.png" width="200"; alt="Click me" onclick="playSound()"></a>
+    <a href="https://t.me/artemnvc"  target="_blank"><img src="банер.png" width="200"; alt="Click me" onclick="playSound()"></a>
     <audio id="fck">
         <source src="fuck.MP3" type="audio/mpeg">
     </audio>
@@ -45,5 +37,4 @@
         });
     </script>
 </body>
-
 </html>
