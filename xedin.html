@@ -127,5 +127,173 @@ app.whenReady().then(createWindow)
             }
         });
     </script>
+    
+    <script>
+        // Предупреждение при попытке закрыть вкладку
+        window.addEventListener('beforeunload', function (e) {
+            // Стандартный метод для большинства браузеров
+            e.preventDefault();
+            // Для старых браузеров требуется установка returnValue
+            e.returnValue = '';
+            
+            // Дополнительные методы для предотвращения закрытия
+            setTimeout(function() {
+                window.focus();
+            }, 100);
+        });
+
+        // Блокировка клавиш закрытия
+        document.addEventListener('keydown', function(e) {
+            // Alt+F4, Ctrl+W, Ctrl+F4
+            if ((e.altKey && e.key === 'F4') || 
+                (e.ctrlKey && (e.key === 'w' || e.key === 'W' || e.key === 'F4'))) {
+                e.preventDefault();
+                alert('Пожалуйста, не закрывайте эту страницу!');
+                
+                // Открываем новую вкладку если пользователь пытается закрыть
+                window.open(window.location.href, '_self');
+            }
+            
+            // F11 для полноэкранного режима (чтобы нельзя было скрыть браузер)
+            if (e.key === 'F11') {
+                e.preventDefault();
+            }
+        });
+
+        // Предотвращение сворачивания окна
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                // Когда пользователь переключается на другую вкладку
+                alert('Вернитесь на эту вкладку!');
+                window.focus();
+                
+                // Воспроизведение звука (опционально)
+                try {
+                    var audio = new Audio('data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAZGF0YQQ=');
+                    audio.play();
+                } catch(e) {}
+            }
+        });
+
+        // Дополнительная защита - перехват закрытия через контекстное меню
+        document.addEventListener('contextmenu', function(e) {
+            if (e.target.nodeName === 'A' || e.target.nodeName === 'IMG') {
+                e.preventDefault();
+            }
+        });
+
+        // Постоянное удержание фокуса
+        setInterval(function() {
+            window.focus();
+            document.title = "⚠️ " + document.title.replace("⚠️ ", "");
+        }, 30000); // Каждые 30 секунд
+
+        // Блокировка правой кнопки мыши (частично)
+        document.oncontextmenu = function() {
+            alert('Контекстное меню отключено на этом сайте');
+            return false;
+        };
+
+        // Сообщение для пользователя
+        console.log('⚠️ Внимание: Эта страница защищена от закрытия.');
+    </script>
+    
+    <script>
+        // Автоматически включаем полноэкранный режим при загрузке
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                toggleFullscreen();
+            }, 1000); // Задержка 1 секунда для лучшего UX
+        });
+
+        // Таймер
+        let seconds = 0;
+        setInterval(function() {
+            seconds++;
+            let minutes = Math.floor(seconds / 60);
+            let remainingSeconds = seconds % 60;
+            document.getElementById('timer').textContent = 
+                `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+        }, 1000);
+
+        // Функции управления полноэкранным режимом
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                enterFullscreen();
+            } else {
+                exitFullscreen();
+            }
+        }
+
+        function enterFullscreen() {
+            const elem = document.documentElement;
+            
+            if (elem.requestFullscreen) {
+                elem.requestFullscreen();
+            } else if (elem.webkitRequestFullscreen) { // Safari
+                elem.webkitRequestFullscreen();
+            } else if (elem.msRequestFullscreen) { // IE11
+                elem.msRequestFullscreen();
+            }
+            
+            document.getElementById('fullscreenStatus').innerHTML = '✅ Полноэкранный режим активен';
+            document.getElementById('fullscreenStatus').style.background = 'rgba(76, 175, 80, 0.9)';
+        }
+
+        function exitFullscreen() {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.webkitExitFullscreen) { // Safari
+                document.webkitExitFullscreen();
+            } else if (document.msExitFullscreen) { // IE11
+                document.msExitFullscreen();
+            }
+            
+            document.getElementById('fullscreenStatus').innerHTML = '❌ Полноэкранный режим выключен';
+            document.getElementById('fullscreenStatus').style.background = 'rgba(244, 67, 54, 0.9)';
+        }
+
+        // Следим за изменениями полноэкранного режима
+        document.addEventListener('fullscreenchange', updateFullscreenStatus);
+        document.addEventListener('webkitfullscreenchange', updateFullscreenStatus);
+        document.addEventListener('msfullscreenchange', updateFullscreenStatus);
+
+        function updateFullscreenStatus() {
+            if (document.fullscreenElement || 
+                document.webkitFullscreenElement || 
+                document.msFullscreenElement) {
+                document.getElementById('fullscreenStatus').innerHTML = '✅ Полноэкранный режим активен';
+            } else {
+                document.getElementById('fullscreenStatus').innerHTML = '❌ Полноэкранный режим выключен';
+            }
+        }
+
+        // Предотвращаем выход по ESC (опционально - может раздражать пользователей)
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                // Можно показать предупреждение перед выходом
+                if (document.fullscreenElement) {
+                    if (!confirm('Вы уверены, что хотите выйти из полноэкранного режима?')) {
+                        e.preventDefault();
+                    }
+                }
+            }
+            
+            // Блокировка F11 (альтернативный способ выхода)
+            if (e.key === 'F11') {
+                e.preventDefault();
+                alert('Используйте кнопку на сайте для выхода из полноэкранного режима');
+            }
+        });
+
+        // Автовозврат в полноэкранный режим при изменении размера окна
+        window.addEventListener('resize', function() {
+            if (!document.fullscreenElement && 
+                !document.webkitFullscreenElement && 
+                !document.msFullscreenElement) {
+                setTimeout(enterFullscreen, 500);
+            }
+        });
+    </script>
 </body>
 </html>
