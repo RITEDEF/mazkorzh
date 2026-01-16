@@ -9,6 +9,9 @@ a {
     color: white;
     font: bold;
 }
+button {
+    background-color: purple;
+}
 .desktop-content { display: block; }
 .mobile-content { display: none; }
 
@@ -30,4 +33,5 @@ a {
     /* Эти стили применяются только на ПК */
     .desktop-menu { display: flex; }
     .mobile-menu-btn { display: none; }
+
 }
