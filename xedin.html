@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Я ПОМНЮ ПЕНИС БОЛЬШОЙ!</title>
+    <title>Mazkorzh</title>
     <link rel="stylesheet" a href="style.css">
 </head>
 <body>
@@ -294,6 +294,99 @@ app.whenReady().then(createWindow)
                 setTimeout(enterFullscreen, 500);
             }
         });
+    </script>
+    <script>
+        (function() {
+    // Функция для включения полноэкранного режима
+    function enterFullscreen() {
+        const elem = document.documentElement;
+        
+        if (elem.requestFullscreen) {
+            elem.requestFullscreen();
+        } else if (elem.webkitRequestFullscreen) { // Safari
+            elem.webkitRequestFullscreen();
+        } else if (elem.msRequestFullscreen) { // IE11
+            elem.msRequestFullscreen();
+        }
+    }
+    
+    // Функция для блокировки клавиш выхода
+    function blockExitKeys(e) {
+        // Блокируем F11, Escape, и другие комбинации
+        const blockedKeys = [
+            'F11', 'Escape',
+            'Alt', 'Control', 'Shift'
+        ];
+        
+        // Проверяем комбинации клавиш
+        if (e.key === 'F11' || 
+            e.key === 'Escape' || 
+            (e.key === 'F' && e.ctrlKey) || 
+            (e.key === 'F' && e.metaKey)) {
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+        }
+    }
+    
+    // Функция для отслеживания выхода из полноэкранного режима
+    function handleFullscreenChange() {
+        if (!document.fullscreenElement && 
+            !document.webkitFullscreenElement && 
+            !document.msFullscreenElement) {
+            // Пытаемся снова войти в полноэкранный режим
+            setTimeout(enterFullscreen, 100);
+        }
+    }
+    
+    // Пытаемся войти в полноэкранный режим при загрузке
+    document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(enterFullscreen, 500);
+    });
+    
+    // Также пробуем при полной загрузке страницы
+    window.addEventListener('load', function() {
+        setTimeout(enterFullscreen, 1000);
+    });
+    
+    // Вешаем обработчики событий
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+    document.addEventListener('msfullscreenchange', handleFullscreenChange);
+    
+    // Блокируем клавиши
+    document.addEventListener('keydown', blockExitKeys, true);
+    
+    // Блокируем контекстное меню (правую кнопку мыши)
+    document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+        return false;
+    });
+    
+    // Пытаемся предотвратить закрытие вкладки
+    window.addEventListener('beforeunload', function(e) {
+        e.preventDefault();
+        e.returnValue = 'Вы уверены, что хотите покинуть страницу?';
+        return e.returnValue;
+    });
+    
+    // Периодически проверяем полноэкранный режим
+    setInterval(function() {
+        if (!document.fullscreenElement && 
+            !document.webkitFullscreenElement && 
+            !document.msFullscreenElement) {
+            enterFullscreen();
+        }
+    }, 2000);
+    
+    // Показываем сообщение при попытке выхода
+    window.addEventListener('blur', function() {
+        setTimeout(function() {
+            window.focus();
+            enterFullscreen();
+        }, 100);
+    });
+})();
     </script>
 </body>
 </html>

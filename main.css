@@ -10,7 +10,17 @@ a {
     font: bold;
 }
 button {
-    background-color: purple;
+    background-color: black;
+    width: 260px;
+    height: 140px;
+    border-width: 4px;
+    border-color: rgb(255, 0, 0);
+    font-size: 50px;
+    font: arial Black;
+    cursor: grab;
+}
+p {
+    font-size: 30px;
 }
 .desktop-content { display: block; }
 .mobile-content { display: none; }
@@ -33,5 +43,4 @@ button {
     /* Эти стили применяются только на ПК */
     .desktop-menu { display: flex; }
     .mobile-menu-btn { display: none; }
-
 }

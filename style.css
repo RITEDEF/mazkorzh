@@ -4,6 +4,9 @@ body {
     padding: 0;
     background-color: yellow;
 }
+* {
+    cursor: url('cursor.png'),pointer;
+}
 .desktop-content { display: block; }
 .mobile-content { display: none; }
 
