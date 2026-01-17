@@ -10,6 +10,7 @@ a {
     font: bold;
 }
 button {
+    color: white;
     background-color: black;
     width: 260px;
     height: 140px;
@@ -43,4 +44,5 @@ p {
     /* Эти стили применяются только на ПК */
     .desktop-menu { display: flex; }
     .mobile-menu-btn { display: none; }
+
 }
