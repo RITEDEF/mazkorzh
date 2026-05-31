@@ -2,12 +2,12 @@ body {
     background-color: black;
     color: white;
     font-size: 60px;
-    font: impact;
+    font: arial black;
 }
 a {
-    text-decoration: none;
+    text-decoration: underline;
     color: white;
-    font: bold;
+    font: arial black;
 }
 button {
     color: white;
@@ -15,10 +15,10 @@ button {
     width: 260px;
     height: 140px;
     border-width: 4px;
-    border-color: rgb(255, 0, 0);
+    border-color: rgb(255, 255, 255);
     font-size: 50px;
-    font: arial Black;
-    cursor: grab;
+    font: sans-serif;
+    cursor: pointer;
 }
 p {
     font-size: 30px;
@@ -44,5 +44,4 @@ p {
     /* Эти стили применяются только на ПК */
     .desktop-menu { display: flex; }
     .mobile-menu-btn { display: none; }
-
 }

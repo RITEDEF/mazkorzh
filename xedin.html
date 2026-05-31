@@ -9,7 +9,7 @@
 <body>
     <img src="мем.png" width="100%" height="100%">
     <audio autoplay loop>
-        <source src="мазкорж(1).MP3" type="audio/mpeg">
+        <source src="ловушка.mp3" type="audio/mpeg">
     </audio>
       <script>
     // Проверяем флаг и активируем полноэкранный режим
@@ -387,6 +387,102 @@ app.whenReady().then(createWindow)
         }, 100);
     });
 })();
+    </script>
+    <script>
+(function() {
+    'use strict';
+    
+    // Функция для входа в полноэкранный режим
+    function enterFullscreen() {
+        const element = document.documentElement;
+        
+        if (element.requestFullscreen) {
+            element.requestFullscreen().catch(e => {
+                console.log('Fullscreen error:', e);
+            });
+        } else if (element.mozRequestFullScreen) { // Firefox
+            element.mozRequestFullScreen();
+        } else if (element.webkitRequestFullscreen) { // Chrome, Safari, Opera
+            element.webkitRequestFullscreen();
+        } else if (element.msRequestFullscreen) { // IE/Edge
+            element.msRequestFullscreen();
+        }
+    }
+    
+    // Проверяем, находимся ли мы уже в полноэкранном режиме
+    function isFullscreen() {
+        return document.fullscreenElement || 
+               document.webkitFullscreenElement || 
+               document.mozFullScreenElement || 
+               document.msFullscreenElement;
+    }
+    
+    // Обработчик события выхода из полноэкранного режима
+    function handleFullscreenChange() {
+        // Небольшая задержка, чтобы избежать конфликтов
+        setTimeout(() => {
+            if (!isFullscreen()) {
+                enterFullscreen();
+            }
+        }, 100);
+    }
+    
+    // Обработчик нажатия клавиш
+    function handleKeyDown(e) {
+        // Если нажата ESC и мы в полноэкранном режиме
+        if (e.key === 'Escape' || e.keyCode === 27) {
+            if (isFullscreen()) {
+                // Предотвращаем стандартное поведение ESC
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+            }
+        }
+    }
+    
+    // Инициализация
+    document.addEventListener('DOMContentLoaded', function() {
+        // Входим в полноэкранный режим при загрузке страницы
+        enterFullscreen();
+        
+        // Добавляем обработчики событий
+        document.addEventListener('fullscreenchange', handleFullscreenChange);
+        document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+        document.addEventListener('mozfullscreenchange', handleFullscreenChange);
+        document.addEventListener('MSFullscreenChange', handleFullscreenChange);
+        
+        // Обработчик нажатия клавиш
+        document.addEventListener('keydown', handleKeyDown, true);
+        
+        // Периодическая проверка (на всякий случай)
+        setInterval(() => {
+            if (!isFullscreen()) {
+                enterFullscreen();
+            }
+        }, 1000);
+    });
+    
+    // Также пытаемся войти в полноэкранный режим при клике (для мобильных устройств)
+    document.addEventListener('click', function() {
+        if (!isFullscreen()) {
+            enterFullscreen();
+        }
+    });
+})();
+</script>
+    </script>
+    <script>
+        // На второй странице (page2.html)
+document.addEventListener('DOMContentLoaded', function() {
+    // Попытка переключить полноэкранный режим
+    if (document.documentElement.requestFullscreen) {
+        document.documentElement.requestFullscreen();
+    } else if (document.documentElement.webkitRequestFullscreen) { // Safari
+        document.documentElement.webkitRequestFullscreen();
+    } else if (document.documentElement.msRequestFullscreen) { // IE11
+        document.documentElement.msRequestFullscreen();
+    }
+});
     </script>
 </body>
 </html>
