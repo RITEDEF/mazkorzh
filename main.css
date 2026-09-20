@@ -12,13 +12,17 @@ a {
 button {
     color: white;
     background-color: black;
-    width: 260px;
-    height: 140px;
+    width: 300px;
+    height: 160px;
     border-width: 4px;
     border-color: rgb(255, 255, 255);
     font-size: 50px;
     font: sans-serif;
     cursor: pointer;
+}
+.button:hover {
+  color: grey;
+  background-color: blue;
 }
 p {
     font-size: 30px;
